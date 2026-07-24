@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanzz Deploy — Menghubungkan...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ================= LOADING SCREEN ================= -->
+<section id="loading-screen" class="screen">
+  <div class="scan-frame">
+    <div class="scan-line"></div>
+    <svg class="loading-logo" viewBox="0 0 120 120" width="80" height="80">
+      <g>
+        <path d="M35 78c-12 0-21-9-21-20 0-10 7-18 17-20 3-12 14-21 27-21 14 0 26 10 28 24 10 1 18 9 18 19 0 11-9 20-20 20H35z"
+              fill="none" stroke="#6366f1" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M64 46 L48 70 H60 L56 92 L78 62 H65 Z" fill="#6366f1"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="loading-percent"><span id="percent-num">0</span>%</div>
+  <div class="loading-bar-track">
+    <div id="loading-bar-fill" class="loading-bar-fill"></div>
+  </div>
+  <p id="loading-status" class="loading-status">INITIALIZING SECURE CHANNEL...</p>
+
+  <div class="boot-log" id="boot-log"></div>
+</section>
+
+<script src="loading.js"></script>
+</body>
+</html>
