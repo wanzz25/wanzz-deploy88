@@ -1,0 +1,8 @@
+# Kalau kamu isi token asli langsung di api/_lib/config.js dan repo ini
+# PUBLIK, uncomment baris di bawah supaya tidak ikut ter-commit:
+# api/_lib/config.js
+
+node_modules/
+.vercel/
+.env
+.env.local
