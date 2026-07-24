@@ -1,0 +1,62 @@
+# flutter-apk-workflow-template.yml
+#
+# CARA PAKAI:
+# 1. Copy file ini ke repo Flutter kamu (repo yang mau kamu build APK-nya,
+#    BUKAN repo Wanzz Deploy ini), simpan sebagai:
+#      .github/workflows/build-apk.yml
+# 2. Commit & push ke repo Flutter kamu.
+# 3. Pastikan repo Flutter itu sudah muncul di panel "Pilih Repository"
+#    Wanzz Deploy (butuh GITHUB_TOKEN yang terhubung ke akun yang sama).
+# 4. Pilih repo itu, buka panel "Build APK (Flutter)", klik tombol Build.
+#
+# CATATAN VERSI FLUTTER:
+# Workflow ini SENGAJA tidak mengunci versi Flutter tertentu (pakai
+# channel "stable" tanpa `flutter-version`), supaya selalu memakai
+# Flutter+Dart SDK stabil TERBARU dari GitHub — menghindari error
+# "version solving failed" akibat pubspec.yaml project kamu butuh Dart
+# SDK yang lebih baru dari versi yang di-pin manual. Kalau project kamu
+# justru butuh versi Flutter LAMA tertentu, ganti bagian `with:` di step
+# "Setup Flutter" jadi:
+#   with:
+#     flutter-version: '3.xx.x'
+#     channel: 'stable'
+#
+# Wanzz Deploy hanya MEMICU workflow ini lewat GitHub Actions API — proses
+# build sungguhan (install Flutter SDK, compile, dsb) berjalan di server
+# GitHub sendiri, bukan di server Wanzz Deploy.
+#
+# Setelah build selesai (pantau di tab "Actions" repo kamu di GitHub,
+# atau langsung dari halaman Build APK Wanzz Deploy), APK hasil build
+# bisa diunduh — namanya "app-release-apk".
+
+name: Build APK (Wanzz Deploy)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter (stable channel terbaru)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Cek versi Flutter & Dart
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK (release)
+        run: flutter build apk --release
+
+      - name: Upload APK sebagai artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
