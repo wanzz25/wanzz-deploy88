@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanzz Deploy — Build APK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ================= BUILD APK PAGE ================= -->
+<section id="apk-page" class="screen">
+
+  <nav class="navbar">
+    <div class="nav-brand">
+      <svg viewBox="0 0 120 120" width="34" height="34">
+        <path d="M35 78c-12 0-21-9-21-20 0-10 7-18 17-20 3-12 14-21 27-21 14 0 26 10 28 24 10 1 18 9 18 19 0 11-9 20-20 20H35z"
+              fill="none" stroke="#6366f1" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M64 46 L48 70 H60 L56 92 L78 62 H65 Z" fill="#6366f1"/>
+      </svg>
+      <span>WANZZ <span class="brand-accent">DEPLOY</span></span>
+    </div>
+    <div class="nav-right">
+      <a href="dashboard.html" class="nav-link-btn" style="text-decoration:none; display:inline-block;">← Dashboard</a>
+      <span class="nav-user" id="nav-user">◆ Quick Session Aktif</span>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-particles" id="banner-particles"></div>
+    <div class="banner-content">
+      <h2 class="banner-title">BUILD <span class="brand-accent">APK</span></h2>
+      <p class="banner-sub">Build Flutter APK sungguhan lewat GitHub Actions</p>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>✦ GITHUB ACTIONS RUNNER &nbsp; ✦ FLUTTER SDK &nbsp; ✦ ANDROID SDK &nbsp; ✦ BUILD DI SERVER GITHUB &nbsp; ✦ GITHUB ACTIONS RUNNER &nbsp; ✦ FLUTTER SDK &nbsp; ✦ ANDROID SDK &nbsp; ✦ BUILD DI SERVER GITHUB &nbsp;</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="dash-main">
+
+    <!-- API Status ringkas -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">01</span> Status GitHub</h3>
+      <p class="panel-desc">Build APK butuh <code>GITHUB_TOKEN</code> dengan scope <strong>repo</strong> + <strong>workflow</strong> di <code>api/_lib/config.js</code>.</p>
+      <div class="api-grid">
+        <div class="api-card fade-in-up" style="--d:0s">
+          <div class="api-icon gh">
+            <svg viewBox="0 0 16 16" width="26" height="26" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </div>
+          <div class="api-info">
+            <span class="api-name">GitHub API</span>
+            <span class="api-key-hint">env: GITHUB_TOKEN — memeriksa...</span>
+          </div>
+          <div class="api-state"><span class="led"></span> CHECKING...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Repository Selector -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">02</span> Pilih Repository Flutter</h3>
+      <p class="panel-desc">Daftar repo asli dari akun GitHub yang terhubung (lewat <code>/api/github</code>) — pilih repo Flutter yang sudah punya file workflow build APK.</p>
+      <div class="repo-grid" id="repo-grid">
+        <div class="repo-card" data-repo="wanzz-dev/flutter-app-demo">
+          <span class="repo-dot"></span>
+          <div class="repo-meta">
+            <span class="repo-name" data-name="flutter-app-demo">flutter-app-demo</span>
+            <span class="repo-branch">main · Flutter</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Build APK -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">03</span> Build APK (Flutter)</h3>
+      <p class="panel-desc">Memicu <strong>GitHub Actions</strong> untuk build APK sungguhan di server GitHub (bukan di sini) — repo target harus sudah punya workflow build. Lihat <code>flutter-apk-workflow-template.yml</code> di project ini untuk contoh siap-copy.</p>
+
+      <div class="upload-name-row" style="margin-bottom:16px;">
+        <label for="apk-workflow-input">Nama file workflow</label>
+        <input type="text" id="apk-workflow-input" value="build-apk.yml" autocomplete="off">
+      </div>
+
+      <div class="upload-name-row" style="margin-bottom:14px;">
+        <label for="apk-branch-input">Branch</label>
+        <input type="text" id="apk-branch-input" value="main" autocomplete="off">
+      </div>
+
+      <p class="panel-desc" style="margin-top:0; margin-bottom:10px; font-size:0.76rem;">Kalau tombol Build gagal dengan error "Not Found", artinya repo ini belum punya file workflow-nya. Klik tombol di bawah dulu buat nambahin otomatis, baru coba Build lagi.</p>
+
+      <div class="deploy-btn-row" style="margin-bottom:14px;">
+        <button class="deploy-btn" id="push-workflow-btn" style="flex:1; justify-content:center; font-size:0.82rem;">
+          📄 Tambahkan Workflow ke Repo Ini
+        </button>
+      </div>
+
+      <button class="deploy-btn" id="build-apk-btn" style="width:100%; justify-content:center;">
+        <span class="btn-shine"></span>
+        📱 Build APK dari Repo Terpilih
+      </button>
+      <p class="panel-desc" style="margin-top:12px; margin-bottom:0; font-size:0.76rem;">Repository terpilih: <span id="apk-selected-repo-label">belum dipilih</span>.</p>
+
+      <div class="apk-result hidden" id="apk-result">
+        <div class="apk-result-status" id="apk-result-status">
+          <span class="apk-spinner" id="apk-spinner"></span>
+          <span id="apk-result-status-text">Menunggu...</span>
+        </div>
+        <div class="apk-download-list" id="apk-download-list"></div>
+      </div>
+    </section>
+
+    <!-- Console Log -->
+    <section class="panel console-panel">
+      <h3 class="panel-title"><span class="idx">04</span> Build Console</h3>
+      <div class="console-window">
+        <div class="console-topbar">
+          <span class="c-dot red"></span><span class="c-dot yellow"></span><span class="c-dot green"></span>
+          <span class="console-title">wanzz-deploy — build-apk</span>
+        </div>
+        <div class="console-body" id="console-body">
+          <div class="console-line dim">// menunggu perintah build...</div>
+          <div class="console-line dim">// pilih repository lalu klik tombol Build APK di atas</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="dash-footer">Wanzz Deploy © 2026 — engineered by <strong>Wanzz Dev</strong></footer>
+</section>
+
+<script src="apk.js"></script>
+</body>
+</html>
