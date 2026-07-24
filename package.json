@@ -1,0 +1,9 @@
+{
+  "name": "wanzz-deploy-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend serverless functions untuk Wanzz Deploy (GitHub, Vercel, Netlify via API key langsung).",
+  "dependencies": {
+    "jszip": "^3.10.1"
+  }
+}
