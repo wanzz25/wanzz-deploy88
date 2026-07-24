@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/build-apk.js": {
+      "includeFiles": "flutter-apk-workflow-template.yml",
+      "maxDuration": 30
+    }
+  }
+}
