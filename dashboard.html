@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanzz Deploy — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- CodeMirror: editor kode full-screen dengan syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/yaml/yaml.min.js"></script>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="dashboard" class="screen">
+
+  <nav class="navbar">
+    <div class="nav-brand">
+      <svg viewBox="0 0 120 120" width="34" height="34">
+        <path d="M35 78c-12 0-21-9-21-20 0-10 7-18 17-20 3-12 14-21 27-21 14 0 26 10 28 24 10 1 18 9 18 19 0 11-9 20-20 20H35z"
+              fill="none" stroke="#6366f1" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M64 46 L48 70 H60 L56 92 L78 62 H65 Z" fill="#6366f1"/>
+      </svg>
+      <span>WANZZ <span class="brand-accent">DEPLOY</span></span>
+    </div>
+    <div class="nav-right">
+      <a href="apk.html" class="nav-link-btn nav-apk-btn" style="text-decoration:none; display:inline-block;">📱 Build APK (Flutter)</a>
+      <span class="nav-user" id="nav-user">◆ Quick Session Aktif</span>
+      <a href="index.html" class="nav-credit" style="text-decoration:none;">by Wanzz Dev</a>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-particles" id="banner-particles"></div>
+    <div class="banner-content">
+      <h2 class="banner-title">SYSTEM <span class="brand-accent">ONLINE</span></h2>
+      <p class="banner-sub">Semua node deployment aktif &amp; siap menerima perintah</p>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>✦ GITHUB API SECURED &nbsp; ✦ VERCEL API SECURED &nbsp; ✦ NETLIFY API SECURED &nbsp; ✦ UPTIME 99.99% &nbsp; ✦ LATENCY 12ms &nbsp; ✦ ENCRYPTED CHANNEL ACTIVE &nbsp; ✦ GITHUB API SECURED &nbsp; ✦ VERCEL API SECURED &nbsp; ✦ NETLIFY API SECURED &nbsp; ✦ UPTIME 99.99% &nbsp; ✦ LATENCY 12ms &nbsp; ✦ ENCRYPTED CHANNEL ACTIVE &nbsp;</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="dash-main">
+
+    <!-- Quick action: akses ke halaman Build APK -->
+    <a href="apk.html" class="apk-quick-link fade-in-up" style="--d:0s; text-decoration:none;">
+      <div class="apk-quick-link-icon">📱</div>
+      <div class="apk-quick-link-text">
+        <span class="apk-quick-link-title">Build APK (Flutter)</span>
+        <span class="apk-quick-link-sub">Buka halaman khusus untuk build APK sungguhan lewat GitHub Actions</span>
+      </div>
+      <div class="apk-quick-link-arrow">→</div>
+    </a>
+
+    <!-- API Status -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">01</span> API Connection Status</h3>
+      <p class="panel-desc">Status diambil langsung dari server lewat <code>/api/status</code> — kredensial asli tersimpan di server dan tidak pernah dikirim ke browser.</p>
+      <div class="api-grid">
+        <div class="api-card fade-in-up" style="--d:0s">
+          <div class="api-icon gh">
+            <svg viewBox="0 0 16 16" width="26" height="26" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </div>
+          <div class="api-info">
+            <span class="api-name">GitHub API</span>
+            <span class="api-key-hint">env: GITHUB_TOKEN — memeriksa...</span>
+          </div>
+          <div class="api-state"><span class="led"></span> CHECKING...</div>
+        </div>
+
+        <div class="api-card fade-in-up" style="--d:0.12s">
+          <div class="api-icon vc">
+            <svg viewBox="0 0 128 128" width="24" height="24" fill="currentColor"><path d="M64 0 128 128H0Z"/></svg>
+          </div>
+          <div class="api-info">
+            <span class="api-name">Vercel API</span>
+            <span class="api-key-hint">env: VERCEL_TOKEN — memeriksa...</span>
+          </div>
+          <div class="api-state"><span class="led"></span> CHECKING...</div>
+        </div>
+
+        <div class="api-card fade-in-up" style="--d:0.24s">
+          <div class="api-icon nl">
+            <svg viewBox="0 0 256 256" width="26" height="26" fill="currentColor"><path d="M42 92 128 42l86 50-86 50Z"/><path d="M42 92v72l86 50v-72Z" opacity="0.6"/><path d="M214 92v72l-86 50v-72Z" opacity="0.85"/></svg>
+          </div>
+          <div class="api-info">
+            <span class="api-name">Netlify API</span>
+            <span class="api-key-hint">env: NETLIFY_TOKEN — memeriksa...</span>
+          </div>
+          <div class="api-state"><span class="led"></span> CHECKING...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Repository Selector -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">02</span> Pilih Repository</h3>
+      <p class="panel-desc">Daftar repo asli dari akun GitHub yang terhubung (lewat <code>/api/github</code>), atau project yang kamu upload sendiri di panel <strong>Upload Project</strong> di bawah — klik salah satu untuk memilihnya sebagai target deploy.</p>
+      <div class="repo-grid" id="repo-grid">
+        <div class="repo-card" data-repo="wanzz-dev/portfolio-site">
+          <span class="repo-dot"></span>
+          <div class="repo-meta">
+            <span class="repo-name" data-name="portfolio-site">portfolio-site</span>
+            <span class="repo-branch">main · Next.js</span>
+          </div>
+          <button class="repo-rename-btn" title="Ganti nama">✎</button>
+        </div>
+        <div class="repo-card" data-repo="wanzz-dev/ecommerce-app">
+          <span class="repo-dot"></span>
+          <div class="repo-meta">
+            <span class="repo-name" data-name="ecommerce-app">ecommerce-app</span>
+            <span class="repo-branch">main · React</span>
+          </div>
+          <button class="repo-rename-btn" title="Ganti nama">✎</button>
+        </div>
+        <div class="repo-card" data-repo="wanzz-dev/api-gateway">
+          <span class="repo-dot"></span>
+          <div class="repo-meta">
+            <span class="repo-name" data-name="api-gateway">api-gateway</span>
+            <span class="repo-branch">develop · Node.js</span>
+          </div>
+          <button class="repo-rename-btn" title="Ganti nama">✎</button>
+        </div>
+        <div class="repo-card" data-repo="wanzz-dev/landing-cyber">
+          <span class="repo-dot"></span>
+          <div class="repo-meta">
+            <span class="repo-name" data-name="landing-cyber">landing-cyber</span>
+            <span class="repo-branch">main · Vite</span>
+          </div>
+          <button class="repo-rename-btn" title="Ganti nama">✎</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deployment Target -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">03</span> Deployment Target</h3>
+      <p class="panel-desc">Repository terpilih: <span id="selected-repo-label">belum dipilih</span><br><span style="color:var(--muted); font-size:0.78rem;">Tombol di bawah ini memanggil backend asli (<code>/api/vercel</code> atau <code>/api/netlify</code>) yang membuat deployment lewat REST API resmi memakai API key server — bukan webhook. Pastikan token sudah diatur — lihat README-BACKEND.md.</span></p>
+
+      <div class="upload-name-row" style="margin-bottom:16px;">
+        <label for="deploy-domain-input">Domain deploy (opsional)</label>
+        <input type="text" id="deploy-domain-input" placeholder="contoh: situs-saya.com atau sub.situs-saya.com" autocomplete="off">
+      </div>
+      <p class="panel-desc" style="margin-top:-10px; margin-bottom:16px; font-size:0.76rem;">Kosongkan untuk pakai subdomain otomatis dari nama project (mis. <code>nama-project.vercel.app</code>). Kalau diisi, domain custom ini harus <strong>sudah terdaftar/terverifikasi</strong> di akun Vercel/Netlify kamu — Wanzz Deploy hanya memasangkannya ke deployment yang baru dibuat, bukan membeli/mendaftarkan domain baru.</p>
+
+      <div class="deploy-btn-row">
+        <button class="deploy-btn deploy-vercel" data-target="Vercel">
+          <span class="btn-shine"></span>
+          <svg viewBox="0 0 128 128" width="20" height="20" fill="currentColor"><path d="M64 0 128 128H0Z"/></svg>
+          Deploy to Vercel
+        </button>
+        <button class="deploy-btn deploy-netlify" data-target="Netlify">
+          <span class="btn-shine"></span>
+          <svg viewBox="0 0 256 256" width="22" height="22" fill="currentColor"><path d="M42 92 128 42l86 50-86 50Z"/><path d="M42 92v72l86 50v-72Z" opacity="0.6"/><path d="M214 92v72l-86 50v-72Z" opacity="0.85"/></svg>
+          Deploy to Netlify
+        </button>
+      </div>
+    </section>
+
+    <!-- Upload Project -->
+    <section class="panel">
+      <h3 class="panel-title"><span class="idx">04</span> Upload Project</h3>
+      <p class="panel-desc">Paste HTML langsung, atau upload file/ZIP dari perangkat kamu (bisa pilih beberapa sekaligus) — sistem otomatis mengekstrak ZIP. Klik ✎ untuk edit isi file, klik nama file untuk ganti nama/path-nya, lalu jadikan repository atau push langsung ke GitHub.</p>
+
+      <div class="raw-html-block">
+        <label for="raw-html-input">Input Raw HTML</label>
+        <textarea id="raw-html-input" spellcheck="false" placeholder="Paste atau tulis kode HTML di sini..."></textarea>
+        <button id="raw-html-add-btn" class="raw-html-add-btn" disabled>＋ Tambah HTML ke Daftar</button>
+      </div>
+
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="file-input" accept=".html,.htm,.zip,.css,.js,.json,.svg,.png,.jpg,.jpeg,.gif,.webp,.ico,.woff,.woff2" hidden multiple>
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 16V4M12 4l-4 4M12 4l4 4"/>
+          <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+        </svg>
+        <p class="dropzone-title">Tarik &amp; lepas file di sini</p>
+        <p class="dropzone-sub">atau <span class="dropzone-browse">klik untuk pilih file</span> · bisa lebih dari 1 · mendukung .zip</p>
+      </div>
+
+      <div class="upload-result hidden" id="upload-result">
+        <div class="upload-result-head">
+          <span id="upload-file-name">—</span>
+        </div>
+        <div class="upload-name-row">
+          <label for="upload-project-name-input">Nama project</label>
+          <input type="text" id="upload-project-name-input" placeholder="nama-project-kamu" autocomplete="off">
+        </div>
+        <div class="upload-file-list" id="upload-file-list"></div>
+        <div class="upload-result-actions">
+          <button class="upload-use-btn hidden" id="upload-use-btn">＋ Jadikan Repository</button>
+          <button class="upload-github-btn hidden" id="upload-github-btn">🐙 Push ke GitHub</button>
+          <button class="upload-clear-btn" id="upload-clear-btn">✕ Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Console Log -->
+    <section class="panel console-panel">
+      <h3 class="panel-title"><span class="idx">05</span> Deployment Console</h3>
+      <div class="console-window">
+        <div class="console-topbar">
+          <span class="c-dot red"></span><span class="c-dot yellow"></span><span class="c-dot green"></span>
+          <span class="console-title">wanzz-deploy — bash</span>
+        </div>
+        <div class="console-body" id="console-body">
+          <div class="console-line dim">// menunggu perintah deploy...</div>
+          <div class="console-line dim">// pilih repository lalu klik salah satu tombol deploy di atas</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="dash-footer">Wanzz Deploy © 2026 — engineered by <strong>Wanzz Dev</strong></footer>
+</section>
+
+<!-- Fullscreen Code Editor (GitHub-style) -->
+<div class="editor-overlay hidden" id="editor-overlay">
+  <div class="editor-topbar">
+    <div class="editor-file-info">
+      <span class="editor-file-icon" id="editor-file-icon">●</span>
+      <span class="editor-file-name" id="editor-file-name">file.html</span>
+      <span class="editor-lang-badge" id="editor-lang-badge">HTML</span>
+    </div>
+    <div class="editor-actions">
+      <button class="editor-btn editor-cancel-btn" id="editor-cancel-btn">Batal</button>
+      <button class="editor-btn editor-save-btn" id="editor-save-btn">💾 Simpan &amp; Tutup</button>
+    </div>
+  </div>
+  <div class="editor-cm-host" id="editor-cm-host"></div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
